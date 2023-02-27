@@ -10,13 +10,19 @@ while (i < 256) {
 
     // Add event listeners to each unique box
     document.getElementById(i).
-            addEventListener("mouseover", function() { hover (this) }); 
+            addEventListener("mouseover", function() { hoverRandom (this) }); 
 
-    function hover(e) {  // Run a function that changes that specific box to a hover box
-        e.setAttribute("class", "hover-box");
+
+    // Function that changes the specific box to random colour
+    function hoverRandom(e) {
+        e.style.cssText += `background-color: #` + randomColor()
     }
-    
     i++; // Iterate all the way to 256
+}
+
+// Creates a random colour
+function randomColor() {
+    return Math.floor(Math.random()*16777215).toString(16);
 }
 
 // Function to create custom sized grid
@@ -30,15 +36,16 @@ function makeNewGrid() {
     document.querySelector('#container').innerHTML = "";
     // Set up a variable j
     var j = 0;
+    // Select the container div
+    const container = document.querySelector('#container'); 
+    // Formula to work out column width in pixels
+    let pixelsInEachColumn = `` + 800/size + `px `;
+    // Formula to add this to the CSS so the boxes grid correctly
+    let columnWidth = pixelsInEachColumn.repeat(size);
+    container.style = `grid-template-columns: ` + columnWidth + `;`;
+
     // Build a new grid of the requested size
     while (j < (size*size)) {
-        // Select the container div
-        const container = document.querySelector('#container'); 
-        // Formula to work out 
-        let pixelsInEachColumn = `` + 800/size + `px `;
-        // Formula to repeat this j times
-        let columnWidth = pixelsInEachColumn.repeat(size);
-        container.style = `grid-template-columns: ` + columnWidth + `;`;
         // Create a div within it
         const content = document.createElement('div'); 
         // Make it a box   
@@ -56,11 +63,16 @@ function makeNewGrid() {
 
         // Add event listeners to each unique box
         document.getElementById(j).
-                addEventListener("mouseover", function() { hover (this) }); 
+                addEventListener("mouseover", function() { hoverRandom (this) }); 
     
-        // Run a function that changes that specific box to a hover box
+        // Function that changes that specific box to a hover box
         function hover(e) {  
-            e.setAttribute("class", "hover-box");
+            e.style.cssText += `background-color: aqua;`;
+        }
+
+        // Function that changes the specific box to random colour
+        function hoverRandom(e) {
+            e.style.cssText += `background-color: #` + randomColor() + `;`;
         }
         j++; // Iterate all the way to the selected number
     }
